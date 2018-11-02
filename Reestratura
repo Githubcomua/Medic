@@ -1,0 +1,183 @@
+import java.util.*;
+
+import static javax.swing.text.StyleConstants.Family;
+
+public class Reestratura {
+    private Map<Doctor, LinkedList<User>> baza;
+
+    public Reestratura(Map<Doctor, LinkedList<User>> baza) {
+        this.baza = baza;
+    }
+
+    public Map<Doctor, LinkedList<User>> getBaza() {
+        return baza;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reestratura that = (Reestratura) o;
+        return Objects.equals(baza, that.baza);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(baza);
+    }
+
+    public void setBaza(Map<Doctor, LinkedList<User>> baza) {
+        this.baza = baza;
+    }
+
+    @Override
+    public String toString() {
+        return "Reestratura{" +
+                "baza=" + baza +
+                '}';
+    }
+
+    public  void addDoctor(){
+        System.out.println("1) добавить доктора. Введите фамилию:");
+        Scanner n = new Scanner(System.in);
+        String familyDoctor = n.next();
+
+        System.out.println(" Введите имя:");
+        Scanner a = new Scanner(System.in);
+        String nameDoctor = a.next();
+
+        System.out.println(" Введите профиль:");
+        Scanner b = new Scanner(System.in);
+        String profileDoctor = b.next();
+
+        baza.put(new Doctor(familyDoctor, nameDoctor, profileDoctor), new LinkedList<>());
+        System.out.println(baza);}
+
+
+    //-------------------------------------------------------------------------------------//////////////////////------------------
+    public void addUser(){
+        System.out.println("2) записати пацієнта на прийом до :");
+        Scanner a = new Scanner(System.in);
+        String user = a.next();
+
+        System.out.println("Введіть прізвище пацієнта:");
+        Scanner n = new Scanner(System.in);
+        String familyUser = n.next();
+
+        System.out.println("Введіть ім’я пацієнта:");
+        Scanner p = new Scanner(System.in);
+        String nameUser = p.next();
+
+        System.out.println("Введіть дату пацієнта:");
+        Scanner w = new Scanner(System.in);
+        String nameDate = w.next();
+
+        System.out.println("Введіть тел пацієнта:");
+        Scanner r = new Scanner(System.in);
+        Integer tel = r.nextInt();
+
+        Set<Map.Entry<Doctor, LinkedList<User>>> entries1 = baza.entrySet();
+        Iterator<Map.Entry<Doctor, LinkedList<User>>> iterator1 = entries1.iterator();
+        while (iterator1.hasNext()){
+            Map.Entry<Doctor, LinkedList<User>> next = iterator1.next();
+            Doctor key = next.getKey();
+            if (key.getFamily().equals(familyUser)){
+                baza.get(key).add(new User(familyUser, nameUser, nameDate, tel));
+                break;
+            }else {
+                System.out.println("Такого Лікаря немає.");
+            }// end if
+        }// end while
+        System.out.println(baza);
+    }
+    //-----------------------------------------------------------------------------------------------------------------------------
+    public void removeUser(){
+        System.out.println("5) видалити пацієнта з усіх лікарів. Введіть прізвище пацієнта:");
+        Scanner r = new Scanner(System.in);
+        String removeP = r.next();
+        System.out.println(removeP);
+
+        Set<Map.Entry<Doctor, LinkedList<User>>> entries1 = baza.entrySet();
+        Iterator<Map.Entry<Doctor, LinkedList<User>>> iterator1 = entries1.iterator();
+        while (iterator1.hasNext()){
+            Map.Entry<Doctor, LinkedList<User>> next = iterator1.next();
+            LinkedList<User> value = next.getValue();
+            Iterator<User> iterator = value.iterator();
+            while (iterator.hasNext()){
+                User p = iterator.next();
+                if (p.getFamily().equals(removeP)){
+                    iterator.remove();
+                    System.out.println(baza);
+
+                }else {
+                    System.out.println("Такого пацієнта немає");
+                }
+            }// end if
+        } // end while
+    } // end removePet
+//-----------------------------------------------------------------------------------------------------------------------------
+
+    public void removeUserFromDoctor() {
+
+        System.out.println("3) виписати пацієнта від лікаря .Введіть прізвище лікаря:");
+        Scanner p = new Scanner(System.in);
+        String familyDoctor = p.next();
+
+        System.out.println("Введіть прізвище пацієнта:");
+        Scanner n = new Scanner(System.in);
+        String familyUser = n.next();
+
+        Set<Map.Entry<Doctor, LinkedList<User>>> entries1 = baza.entrySet();
+        Iterator<Map.Entry<Doctor, LinkedList<User>>> iterator1 = entries1.iterator();
+        while (iterator1.hasNext()) {
+            Map.Entry<Doctor, LinkedList<User>> next = iterator1.next();
+            Doctor key = next.getKey();
+
+            if (key.getFamily().equals(familyDoctor)) {
+                Set<Map.Entry<Doctor, LinkedList<User>>> entries2 = baza.entrySet();
+                Iterator<Map.Entry<Doctor, LinkedList<User>>> iterator2 = entries1.iterator();
+                while (iterator2.hasNext()) {
+                    Map.Entry<Doctor, LinkedList<User>> next1 = iterator2.next();
+                    LinkedList<User> value = next1.getValue();
+                    Iterator<User> iterator = value.iterator();
+                    while (iterator.hasNext()) {
+                        User userUser = iterator.next();
+                        if (userUser.getFamily().equals(familyDoctor)) {
+                            iterator.remove();
+                            System.out.println("ok");
+                            break;
+
+                        } else {
+                            System.out.println("Такого пацієнта немає");
+                        }
+                    } //end  while (iterator.hasNext())
+                } // end  (iterator2.hasNext())
+            }// end if (key.getName().equals(namePers))
+            else {
+                System.out.println("Такого учасника немає.");
+            }
+        } //end while (iterator1.hasNext())
+    }//end removePetFromPerson()
+    //----------------------------------------------------------------------------------------------------------------------------
+
+    public void removeDoctor(){
+        System.out.println("4) звільнити лікаря. Введіть прізвище лікаря:");
+        Scanner p = new Scanner(System.in);
+        String familyDoctor = p.next();
+
+        Set<Map.Entry<Doctor, LinkedList<User>>> entries1 = baza.entrySet();
+        Iterator<Map.Entry<Doctor, LinkedList<User>>> iterator1 = entries1.iterator();
+        while (iterator1.hasNext()){
+            Map.Entry<Doctor, LinkedList<User>> next = iterator1.next();
+            Doctor key = next.getKey();
+            if (key.getFamily().equals(familyDoctor)){
+                iterator1.remove();
+                System.out.println("лікаря видалено");
+            }else {
+                System.out.println("Такого лікаря немає.");
+            }
+        }// end while
+
+    }
+
+}
