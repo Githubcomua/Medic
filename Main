@@ -1,0 +1,69 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // write your code here
+
+        User Ivan = new User("Ivanov", "Ivan", "3.8.1970", 676725845);
+        User Oleg = new User("Petrov", "Oleg", "12.2.1960", 65412589);
+        User Petr = new User("Sidorov", "Petr", "19.5.1980", 875412365);
+
+        Doctor Sidorov = new Doctor("Sidorov", "Ivan", "Stomatolog");
+        Doctor First = new Doctor("First", "Name", "Patologoanatom");
+        Doctor Second = new Doctor("Second", "Olya", "Cardio");
+
+        LinkedList<User> users = new LinkedList<>();
+        users.add(Petr);
+        users.add(Oleg);
+
+        Reestratura reest = new Reestratura(new HashMap<>());
+        reest.getBaza().put(new Doctor("Five", "Sasha", "Akusher"), users);
+
+        System.out.println("1) добавить доктора;\n" +
+                "2) записать пациента к врачу.\n" +
+                "3) выписать пациента от врача.\n" +
+                "4) уволить врача.\n" +
+                "5) выписать пациента от всех врачей.\n" +
+                "6) вивести на екран реестратуру.\n" +
+                "7) выйти из меню.");
+
+        int i = 1;
+        while (i > 0) {
+
+            Scanner number = new Scanner(System.in);
+            Integer num = number.nextInt();
+
+
+            switch (num) {
+
+                case 1:
+                    reest.addDoctor();
+                    break;
+                case 2:
+                    reest.addUser();
+                    break;
+                case 3:
+                    reest.removeUserFromDoctor();
+                    break;
+                case 4:
+                    reest.removeDoctor();
+                    break;
+                case 5:
+                    reest.removeUser();
+                    break;
+                case 6:
+                    if (reest.getBaza().isEmpty()) {
+                        System.out.println(" В лікарні пацієнтів немає");
+                    } else {
+                        System.out.println(reest);
+                    } //end case 6
+                    break;
+                case 7:
+                    i--;
+            }//end_switch
+        }
+    }
+}
