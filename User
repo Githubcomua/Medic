@@ -1,0 +1,78 @@
+import java.util.Objects;
+
+public class User {
+    private String Family;
+    private String Name;
+    private String Date;
+    private int tel;
+
+    public User(String family, String name, String date, int tel) {
+        Family = family;
+        Name = name;
+        Date = date;
+        this.tel = tel;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "Family='" + Family + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Date='" + Date + '\'' +
+                ", tel=" + tel +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return tel == user.tel &&
+                Objects.equals(Family, user.Family) &&
+                Objects.equals(Name, user.Name) &&
+                Objects.equals(Date, user.Date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Family, Name, Date, tel);
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getFamily() {
+        return Family;
+    }
+
+    public void setFamily(String family) {
+        Family = family;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+
+
+
+
+    public int getTel() {
+        return tel;
+    }
+
+    public void setTel(int tel) {
+        this.tel = tel;
+    }
+
+}
